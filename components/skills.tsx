@@ -7,7 +7,7 @@ import { useState } from "react"
 
 type Skill = {
 	name: string
-	icon: string
+	icon?: string
 }
 
 const skills: Skill[] = [
@@ -19,21 +19,62 @@ const skills: Skill[] = [
 		name: "Next",
 		icon: "devicon-nextjs-original-wordmark",
 	},
+	{ name: "Vue", icon: "devicon-vuejs-plain" },
 	{
 		name: "TypeScript",
 		icon: "devicon-typescript-plain",
+	},
+	{
+		name: "Php",
+		icon: "devicon-php-plain",
 	},
 	{
 		name: "Node",
 		icon: "devicon-nodejs-plain",
 	},
 	{
+		name: "Express",
+		icon: "devicon-express-original",
+	},
+	{
+		name: "TRPC",
+		icon: "devicon-trpc-plain",
+	},
+	{
 		name: "Tailwind CSS",
 		icon: "devicon-tailwindcss-original",
 	},
 	{
+		name: "ECharts",
+		// icon: "devicon-tailwindcss-original",
+	},
+	{
+		name: "D3",
+		icon: "devicon-d3js-plain",
+	},
+	{
+		name: "MongoDB",
+		icon: "devicon-mongodb-plain",
+	},
+	{
 		name: "PostgreSQL",
 		icon: "devicon-postgresql-plain",
+	},
+	{
+		name: "MySql",
+		icon: "devicon-mysql-original",
+	},
+	{
+		name: "Oracle",
+		icon: "devicon-oracle-original",
+	},
+	{
+		name: "Webpack",
+		icon: "devicon-webpack-plain",
+	},
+	{
+		name: "Vite",
+		icon: "devicon-vitejs-plain",
 	},
 	{
 		name: "Docker",
@@ -42,6 +83,25 @@ const skills: Skill[] = [
 	{
 		name: "CI/CD",
 		icon: "devicon-jenkins-line",
+	},
+	{
+		name: "Jest",
+		icon: "devicon-jest-plain",
+	},
+	{
+		name: "PlayRight",
+		icon: "devicon-playwright-plain",
+	},
+	{
+		name: "Solidity",
+		icon: "devicon-solidity-plain",
+	},
+	{
+		name: "HardHat",
+		icon: "devicon-hardhat-plain",
+	},
+	{
+		name: "Ethers",
 	},
 ]
 
@@ -66,7 +126,7 @@ const SkillBadge = ({ skill }: { skill: Skill }) => {
 		<Badge
 			key={skill.name}
 			variant="outline"
-			className="justify-center py-2 bg-gradient-to-r from-chart-1/10 to-chart-2/10 hover:from-chart-1/20 hover:to-chart-2/20 transition-colors flex items-center gap-2 text-md"
+			className="justify-center py-1 bg-gradient-to-r from-chart-1/10 to-chart-2/10 hover:from-chart-1/20 hover:to-chart-2/20 transition-colors flex items-center gap-2 text-md"
 			onMouseEnter={enter}
 			onMouseLeave={leave}
 		>

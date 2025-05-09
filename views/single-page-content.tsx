@@ -10,68 +10,22 @@ import { Skills } from "@/components/skills"
 
 const projects: ProjectCardProps[] = [
 	{
-		title: "Project Pulse",
-		description: "Real-time analytics dashboard",
-		tech: ["React", "Node.js", "WebSocket"],
-		link: "#",
+		title: "xx规则引擎",
+		description: "信贷规则及管理编辑前端，可视化规则编辑",
+		tech: ["React", "Antv", "Antd", "Jotai"],
+		preview: "rule-engine-sample.png",
 	},
 	{
-		title: "DevFlow",
-		description: "Developer workflow automation",
-		tech: ["TypeScript", "GraphQL", "Docker"],
-		link: "#",
-	},
-	{
-		title: "DevFlow",
-		description: "Developer workflow automation",
-		tech: ["TypeScript", "GraphQL", "Docker"],
-		link: "#",
-	},
-	{
-		title: "DevFlow",
-		description: "Developer workflow automation",
-		tech: ["TypeScript", "GraphQL", "Docker"],
-		link: "#",
-	},
-	{
-		title: "DevFlow",
-		description: "Developer workflow automation",
-		tech: ["TypeScript", "GraphQL", "Docker"],
-		link: "#",
+		title: "jira克隆",
+		description: "全栈项目管理工具，包含看板/日历/工作区/成员管理",
+		tech: ["Next", "AppWrite", "Hono", "Jotai"],
+		preview: "jiratata.png",
+		link: "https://jiratata.vercel.app",
 	},
 ]
 
 export function SinglePageContent() {
 	const [activeSection, setActiveSection] = useState("about")
-
-	// Mouse movement effect
-	const mouseX = useMotionValue(0)
-	const mouseY = useMotionValue(0)
-
-	const springConfig = { damping: 25, stiffness: 700 }
-	const rotateX = useSpring(
-		useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [10, -10]),
-		springConfig
-	)
-	const rotateY = useSpring(
-		useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-10, 10]),
-		springConfig
-	)
-
-	useEffect(() => {
-		const handleMouseMove = (event: MouseEvent) => {
-			const { clientX, clientY } = event
-			const { innerWidth, innerHeight } = window
-			const x = clientX - innerWidth / 2
-			const y = clientY - innerHeight / 2
-
-			mouseX.set(x)
-			mouseY.set(y)
-		}
-
-		window.addEventListener("mousemove", handleMouseMove)
-		return () => window.removeEventListener("mousemove", handleMouseMove)
-	}, [mouseX, mouseY])
 
 	return (
 		<div className="min-h-screen flex items-center justify-center p-4">
@@ -92,9 +46,9 @@ export function SinglePageContent() {
 								className="text-4xl md:text-5xl font-bold mb-4"
 							>
 								<span className="relative">
-									🧑‍💻Siyn Ma
-									<span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-chart-1/50 to-chart-2/50"></span>
-								</span>
+										🧑‍💻Siyn Ma
+										<span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-chart-1/50 to-chart-2/50"></span>
+									</span>
 								<br />
 								<span className="text-transparent bg-clip-text bg-gradient-to-r from-chart-1 to-chart-2">
 									experiences that pulse
@@ -139,31 +93,21 @@ export function SinglePageContent() {
 					</motion.div>
 
 					{/* Right Column - Dynamic Content */}
-					<motion.div
-						style={{
-							rotateX,
-							rotateY,
-							transformStyle: "preserve-3d",
-							perspective: 1000,
-						}}
-					>
+					<div>
 						<div className="flex gap-2 mb-6">
 							{["about", "skills", "projects"].map((section) => (
 								<Button
 									key={section}
-									variant={activeSection === section ? "default" : "outline"}
 									size="sm"
 									onClick={() => setActiveSection(section)}
-									className={
-										activeSection === section ? "bg-gradient-to-r from-chart-1 to-chart-2" : ""
-									}
+									className={`relative z-50 ${activeSection === section ? "bg-gradient-to-r from-chart-1 to-chart-2" : ""}`}
 								>
 									{section.charAt(0).toUpperCase() + section.slice(1)}
 								</Button>
 							))}
 						</div>
 
-						<motion.div className="h-[400px] overflow-y-auto custom-scrollbar">
+						<div className="h-[400px] overflow-y-auto custom-scrollbar">
 							{activeSection === "about" && (
 								<div className="space-y-4">
 									<p>
@@ -178,6 +122,15 @@ export function SinglePageContent() {
 										I specialize in modern JavaScript frameworks, cloud architecture, and building
 										high-performance applications that scale.
 									</p>
+
+									<p>
+										Currently in 🏙️
+										<span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-chart-1 to-chart-2 text-lg">
+											ShenZhen
+										</span>
+										, interested in EDM, Movie, Hiking and photograph, Feel free to reach out if you
+										just want to hang out or chat.
+									</p>
 								</div>
 							)}
 
@@ -190,8 +143,8 @@ export function SinglePageContent() {
 									))}
 								</div>
 							)}
-						</motion.div>
-					</motion.div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
