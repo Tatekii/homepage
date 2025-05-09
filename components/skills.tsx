@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
+import { useState } from "react"
 
 type Skill = {
 	name: string
@@ -48,16 +49,29 @@ const skills: Skill[] = [
 export function Skills() {
 	return (
 		<div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-			{skills.map((skill) => (
-				<Badge
-					key={skill.name}
-					variant="outline"
-					className="group justify-center py-2 bg-gradient-to-r from-chart-1/10 to-chart-2/10 hover:from-chart-1/20 hover:to-chart-2/20 transition-colors flex items-center gap-2 text-md"
-				>
-					{skill && <i className={cn(skill.icon, "group-hover:colored transition-all")}></i>}
-					<span className="group-hover:text-chart-1 transition-colors">{skill.name}</span>
-				</Badge>
+			{skills.map((s) => (
+				<SkillBadge skill={s} key={s.name} />
 			))}
 		</div>
+	)
+}
+
+const SkillBadge = ({ skill }: { skill: Skill }) => {
+	const [isHover, setIsHover] = useState(false)
+
+	const enter = () => setIsHover(true)
+	const leave = () => setIsHover(false)
+
+	return (
+		<Badge
+			key={skill.name}
+			variant="outline"
+			className="justify-center py-2 bg-gradient-to-r from-chart-1/10 to-chart-2/10 hover:from-chart-1/20 hover:to-chart-2/20 transition-colors flex items-center gap-2 text-md"
+			onMouseEnter={enter}
+			onMouseLeave={leave}
+		>
+			{skill && <i className={cn(skill.icon, isHover ? "colored" : "")}></i>}
+			<span className="select-none group-hover:text-chart-1 transition-colors">{skill.name}</span>
+		</Badge>
 	)
 }

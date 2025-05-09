@@ -49,8 +49,14 @@ export function SinglePageContent() {
 	const mouseY = useMotionValue(0)
 
 	const springConfig = { damping: 25, stiffness: 700 }
-	const rotateX = useSpring(useTransform(mouseY, [-300, 300], [10, -10]), springConfig)
-	const rotateY = useSpring(useTransform(mouseX, [-400, 400], [-10, 10]), springConfig)
+	const rotateX = useSpring(
+		useTransform(mouseY, [-window.innerHeight / 2, window.innerHeight / 2], [10, -10]),
+		springConfig
+	)
+	const rotateY = useSpring(
+		useTransform(mouseX, [-window.innerWidth / 2, window.innerWidth / 2], [-10, 10]),
+		springConfig
+	)
 
 	useEffect(() => {
 		const handleMouseMove = (event: MouseEvent) => {
@@ -100,26 +106,24 @@ export function SinglePageContent() {
 						</div>
 
 						<div className="flex gap-4">
-							<Button variant="default" className="bg-gradient-to-r from-chart-1 to-chart-2" asChild>
+							<Button
+								variant="default"
+								className="bg-gradient-to-r from-chart-1 to-chart-2 relative z-10 cursor-pointer"
+								asChild
+							>
 								<a href="mailto:mrtatekii33@gmail.com">
 									<Mail className="mr-2 h-4 w-4" />
 									Contact
 								</a>
 							</Button>
-							{/* <Button variant="outline" className="gap-2" asChild>
-                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4" />
-                  Resume
-                </a>
-              </Button> */}
 						</div>
 
-						<div className="flex gap-4 text-muted-foreground">
+						<div className="flex gap-4 text-muted-foreground relative z-10">
 							<a
 								href="https://github.com/Tatekii"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="hover:text-foreground transition-colors"
+								className="hover:text-foreground transition-colors cursor-pointer"
 							>
 								<Github className="h-5 w-5" />
 							</a>
@@ -127,7 +131,7 @@ export function SinglePageContent() {
 								href="https://www.linkedin.com/in/%E6%80%9D%E5%BC%95-%E9%A9%AC-518a932a3/"
 								target="_blank"
 								rel="noopener noreferrer"
-								className="hover:text-foreground transition-colors"
+								className="hover:text-foreground transition-colors cursor-pointer"
 							>
 								<Linkedin className="h-5 w-5" />
 							</a>
@@ -159,9 +163,7 @@ export function SinglePageContent() {
 							))}
 						</div>
 
-						<motion.div
-							className="h-[400px] overflow-y-auto custom-scrollbar"
-						>
+						<motion.div className="h-[400px] overflow-y-auto custom-scrollbar">
 							{activeSection === "about" && (
 								<div className="space-y-4">
 									<p>
@@ -179,9 +181,7 @@ export function SinglePageContent() {
 								</div>
 							)}
 
-							{activeSection === "skills" && (
-								<Skills />
-							)}
+							{activeSection === "skills" && <Skills />}
 
 							{activeSection === "projects" && (
 								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
