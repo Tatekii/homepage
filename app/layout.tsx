@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Analytics } from "@/components/analytics"
+import { VersionWatermark } from "@/components/version-watermark"
 import Particles from "@/components/particles"
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
 					<div className="relative min-h-screen flex flex-col">
 						<main className="flex-grow">{children}</main>
+						<VersionWatermark />
 					</div>
 					<Analytics />
 				</ThemeProvider>
