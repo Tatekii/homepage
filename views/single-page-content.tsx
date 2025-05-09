@@ -5,25 +5,32 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Github, Mail, Linkedin, ExternalLink, Music } from "lucide-react"
+import { ProjectCard, ProjectCardProps } from "@/components/project-card"
+import { Skills } from "@/components/skills"
 
-const skills = [
-	"React",
-	"Next.js",
-	"TypeScript",
-	"Node.js",
-	"GraphQL",
-	"Tailwind CSS",
-	"PostgreSQL",
-	"AWS",
-	"Docker",
-	"CI/CD",
-]
-
-const projects = [
+const projects: ProjectCardProps[] = [
 	{
 		title: "Project Pulse",
 		description: "Real-time analytics dashboard",
 		tech: ["React", "Node.js", "WebSocket"],
+		link: "#",
+	},
+	{
+		title: "DevFlow",
+		description: "Developer workflow automation",
+		tech: ["TypeScript", "GraphQL", "Docker"],
+		link: "#",
+	},
+	{
+		title: "DevFlow",
+		description: "Developer workflow automation",
+		tech: ["TypeScript", "GraphQL", "Docker"],
+		link: "#",
+	},
+	{
+		title: "DevFlow",
+		description: "Developer workflow automation",
+		tech: ["TypeScript", "GraphQL", "Docker"],
 		link: "#",
 	},
 	{
@@ -79,7 +86,7 @@ export function SinglePageContent() {
 								className="text-4xl md:text-5xl font-bold mb-4"
 							>
 								<span className="relative">
-									Building digital
+									🧑‍💻Siyn Ma
 									<span className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-chart-1/50 to-chart-2/50"></span>
 								</span>
 								<br />
@@ -135,7 +142,6 @@ export function SinglePageContent() {
 							transformStyle: "preserve-3d",
 							perspective: 1000,
 						}}
-						className="bg-card/30 backdrop-blur-sm rounded-xl p-6 border border-border/50"
 					>
 						<div className="flex gap-2 mb-6">
 							{["about", "skills", "projects"].map((section) => (
@@ -155,12 +161,11 @@ export function SinglePageContent() {
 
 						<motion.div
 							className="h-[400px] overflow-y-auto custom-scrollbar"
-							style={{ transform: "translateZ(20px)" }}
 						>
 							{activeSection === "about" && (
 								<div className="space-y-4">
 									<p>
-										I&#39;m a passionate full-stack developer with 8+ years of experience crafting
+										I&#39;m a passionate full-stack developer with 5+ years of experience crafting
 										digital solutions that combine technical excellence with beautiful design.
 									</p>
 									<p>
@@ -175,36 +180,13 @@ export function SinglePageContent() {
 							)}
 
 							{activeSection === "skills" && (
-								<div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-									{skills.map((skill) => (
-										<Badge
-											key={skill}
-											variant="outline"
-											className="justify-center bg-primary/5 hover:bg-primary/10"
-										>
-											{skill}
-										</Badge>
-									))}
-								</div>
+								<Skills />
 							)}
 
 							{activeSection === "projects" && (
-								<div className="space-y-4">
+								<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
 									{projects.map((project) => (
-										<div
-											key={project.title}
-											className="p-4 rounded-lg bg-background/50 border border-border/50 hover:border-chart-2/50 transition-colors"
-										>
-											<h3 className="text-lg font-semibold mb-2">{project.title}</h3>
-											<p className="text-muted-foreground mb-3">{project.description}</p>
-											<div className="flex flex-wrap gap-2">
-												{project.tech.map((tech) => (
-													<Badge key={tech} variant="outline" className="bg-primary/5">
-														{tech}
-													</Badge>
-												))}
-											</div>
-										</div>
+										<ProjectCard key={project.title} {...project} />
 									))}
 								</div>
 							)}

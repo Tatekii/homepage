@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "Running pre-push checks..."
+pnpm run lint || exit 1
+# Uncomment the next line when you have tests
+# pnpm run test || exit 1

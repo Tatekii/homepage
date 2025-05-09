@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('devicon/devicon.min.css');
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -37,11 +38,11 @@
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
     --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --chart-1: 275 38% 41%;
+    --chart-2: 275 40% 56%;
+    --chart-3: 270 50% 35%;
+    --chart-4: 280 45% 50%;
+    --chart-5: 265 55% 45%;
     --radius: 0.5rem;
   }
 
@@ -65,11 +66,11 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-1: 275 38% 41%;
+    --chart-2: 275 40% 56%;
+    --chart-3: 270 50% 35%;
+    --chart-4: 280 45% 50%;
+    --chart-5: 265 55% 45%;
   }
 }
 
@@ -84,7 +85,7 @@
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--chart-1)) transparent;
+  scrollbar-color: rgba(103, 64, 144, 0.8) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -96,6 +97,6 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--chart-1));
+  background-color: rgba(103, 64, 144, 0.8);
   border-radius: 3px;
 }
