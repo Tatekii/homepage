@@ -1,11 +1,12 @@
 import Particles from "@/components/particles"
-import { SinglePageContent } from "@/views/single-page-content"
 import SongEmbed from "@/components/song-embed"
+import { IndexView } from "@/views/index-view"
 
 export default function HomePage() {
 	return (
 		<div>
-			<div className="absolute inset-0 w-full h-full opacity-60">
+			<IndexView />
+			<div className="absolute inset-0 w-full h-full opacity-60 z-[-10]">
 				<Particles
 					particleColors={["#ffffff", "#ffffff"]}
 					particleCount={200}
@@ -17,7 +18,6 @@ export default function HomePage() {
 					disableRotation={false}
 				/>
 			</div>
-			<SinglePageContent />
 			<SongEmbed />
 		</div>
 	)

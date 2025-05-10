@@ -106,7 +106,7 @@ const skills: Skill[] = [
 ]
 
 // Named export as imported in single-page-content.tsx
-export function Skills() {
+export function SkillsSection() {
 	return (
 		<div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
 			{skills.map((s) => (

@@ -2,7 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Analytics } from "@/components/analytics"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { VersionWatermark } from "@/components/version-watermark"
 import Particles from "@/components/particles"
 
@@ -17,10 +17,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={`${GeistSans.className} antialiased`}>
 				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
 					<div className="relative min-h-screen flex flex-col">
+						<ThemeToggle />
 						<main className="flex-grow">{children}</main>
 						<VersionWatermark />
 					</div>
-					<Analytics />
 				</ThemeProvider>
 			</body>
 		</html>

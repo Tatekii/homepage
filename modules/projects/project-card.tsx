@@ -3,20 +3,15 @@
 import { useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
-import { ExternalLink, X } from "lucide-react"
+import { Code, ExternalLink, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
+import { ProjectData } from "@/modules/projects/types"
 
-export interface ProjectCardProps {
-	title: string
-	description: string
-	tech: string[]
-	link?: string
-	preview: string
-}
+export type ProjectCardProps = ProjectData
 
-export function ProjectCard({ title, description, tech, link = "", preview }: ProjectCardProps) {
+export function ProjectCard({ title, description, tech, link = "", preview,sourceCode='' }: ProjectCardProps) {
 	const [showFullImage, setShowFullImage] = useState(false)
 
 	const toggleImagePreview = (e: React.MouseEvent) => {
@@ -43,11 +38,22 @@ export function ProjectCard({ title, description, tech, link = "", preview }: Pr
 				<CardHeader className="pb-1 pt-3 px-3">
 					<div className="flex items-center justify-between">
 						<CardTitle className="text-md font-semibold">{title}</CardTitle>
-						{link && (
-							<Link href={link} target="_blank" rel="noopener noreferrer" className="block">
-								<ExternalLink className="h-4 w-4 opacity-50 group-hover:opacity-100 transition-opacity" />
-							</Link>
-						)}
+
+						<div className="links flex gap-1">
+
+
+							{sourceCode && (
+								<Link href={sourceCode} target="_blank" rel="noopener noreferrer" className="block">
+									<Code className="h-4 w-4 opacity-50 hover:opacity-100 transition-opacity" />
+								</Link>
+							)}
+
+							{link && (
+								<Link href={link} target="_blank" rel="noopener noreferrer" className="block">
+									<ExternalLink className="h-4 w-4 opacity-50 hover:opacity-100 transition-opacity" />
+								</Link>
+							)}
+						</div>
 					</div>
 					<CardDescription className="text-xs line-clamp-2">{description}</CardDescription>
 				</CardHeader>
@@ -71,7 +77,7 @@ export function ProjectCard({ title, description, tech, link = "", preview }: Pr
 			<AnimatePresence>
 				{showFullImage && (
 					<motion.div
-						className="fixed inset-0 bg-background/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+						className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center p-4"
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
 						exit={{ opacity: 0 }}
