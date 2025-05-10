@@ -4,7 +4,6 @@ import { GeistSans } from "geist/font/sans"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { VersionWatermark } from "@/components/version-watermark"
-import Particles from "@/components/particles"
 
 export const metadata: Metadata = {
 	title: "Developer Portfolio",
@@ -19,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<div className="relative h-screen">
 						<ThemeToggle />
 						{children}
-						<VersionWatermark />
+						<VersionWatermark className="fixed bottom-4 right-4 pointer-events-none z-50" />
 					</div>
 				</ThemeProvider>
 			</body>

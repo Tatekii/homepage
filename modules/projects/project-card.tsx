@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/comp
 import { Code, ExternalLink, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { OptimizedImage } from "@/components/optimized-image"
 import { motion, AnimatePresence } from "framer-motion"
 import { ProjectData } from "@/modules/projects/types"
 
@@ -25,7 +26,7 @@ export function ProjectCard({ title, description, tech, link = "", preview,sourc
 			<Card className="bg-card/30 backdrop-blur-sm hover:border-chart-2/50 transition-all shadow-sm hover:shadow-md hover:shadow-chart-2/20 group h-full overflow-hidden">
 				{/* Preview Image - Clickable */}
 				<div className="relative h-32 w-full overflow-hidden cursor-pointer">
-					<Image
+					<OptimizedImage
 						src={"projects/" + preview}
 						alt={`${title} preview`}
 						fill
@@ -92,7 +93,7 @@ export function ProjectCard({ title, description, tech, link = "", preview,sourc
 							onClick={(e) => e.stopPropagation()}
 						>
 							<div className="relative w-full h-[70vh]">
-								<Image
+								<OptimizedImage
 									src={"projects/" + preview}
 									alt={`${title} preview`}
 									fill
