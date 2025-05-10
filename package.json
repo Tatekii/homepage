@@ -1,13 +1,17 @@
 {
   "name": "nextjs",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "NEXT_OPTIMIZE_FONTS=true NEXT_MINIMIZE_ASSETS=true next build && node scripts/image-optimizer.js",
+    "build:analyze": "node analyze-bundle.js",
+    "build:no-optimize": "next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
+    "analyze:images": "chmod +x scripts/check-image-sizes.sh && ./scripts/check-image-sizes.sh",
+    "optimize:images": "node scripts/image-optimizer.js",
     "release": "standard-version",
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
@@ -80,7 +84,9 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "devicon": "^2.16.0",
+    "glob": "^11.0.2",
     "husky": "^9.1.7",
+    "sharp": "^0.34.1",
     "standard-version": "^9.5.0"
   }
 }
