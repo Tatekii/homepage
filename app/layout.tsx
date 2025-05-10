@@ -16,9 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${GeistSans.className} antialiased`}>
 				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-					<div className="relative min-h-screen flex flex-col">
+					<div className="relative h-screen">
 						<ThemeToggle />
-						<main className="flex-grow">{children}</main>
+						{children}
 						<VersionWatermark />
 					</div>
 				</ThemeProvider>

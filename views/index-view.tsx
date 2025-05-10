@@ -1,12 +1,14 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { AboutSection } from "@/modules/about/about-section"
 import { ProfileSection } from "@/modules/profile/profile-section"
-import { ProjectsSection } from "@/modules/projects/projects-section"
-import { SkillsSection } from "@/modules/skills/skills-section"
-import { useState } from "react"
+import { useState, Suspense, lazy } from "react"
 import { motion, AnimatePresence } from "framer-motion"
+
+// Dynamic imports for each section to reduce initial bundle size
+const AboutSection = lazy(() => import("@/modules/about/about-section").then(mod => ({ default: mod.AboutSection })))
+const ProjectsSection = lazy(() => import("@/modules/projects/projects-section").then(mod => ({ default: mod.ProjectsSection })))
+const SkillsSection = lazy(() => import("@/modules/skills/skills-section").then(mod => ({ default: mod.SkillsSection })))
 
 type SectionType = "about" | "skills" | "projects"
 
