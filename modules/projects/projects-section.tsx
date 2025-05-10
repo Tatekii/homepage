@@ -2,7 +2,6 @@
 
 import { ProjectCard } from "@/modules/projects/project-card"
 import { ProjectData } from "./types"
-import { ImageOptimizationDemo } from "@/components/image-optimization-demo"
 
 const projects: ProjectData[] = [
 	{

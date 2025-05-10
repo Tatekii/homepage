@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "NODE_ENV=development next dev",
     "dev:no-optimize": "SKIP_IMAGE_OPTIMIZATION=true next dev",
+    "dev:debug": "NODE_ENV=development DEBUG_IMAGE_OPTIMIZATION=true next dev",
     "build": "NEXT_OPTIMIZE_FONTS=true NEXT_MINIMIZE_ASSETS=true next build",
     "build:responsive": "GENERATE_RESPONSIVE=true NEXT_OPTIMIZE_FONTS=true NEXT_MINIMIZE_ASSETS=true next build",
+    "build:debug": "DEBUG_IMAGE_OPTIMIZATION=true NEXT_OPTIMIZE_FONTS=true NEXT_MINIMIZE_ASSETS=true next build",
     "build:analyze": "node analyze-bundle.js",
     "build:no-optimize": "SKIP_IMAGE_OPTIMIZATION=true next build",
     "start": "next start",

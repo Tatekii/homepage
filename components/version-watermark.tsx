@@ -1,8 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import packageJson from "../package.json"
-import { FormatSupportIndicator } from "@/components/format-support-indicator"
-
 interface VersionWatermarkProps {
   className?: string
 }

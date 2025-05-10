@@ -47,17 +47,20 @@ const nextConfig = {
   
   // Add webpack plugin for image optimization
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Add our image optimization plugin if it exists and isn't skipped
-    if (ImageOptimizationWebpackPlugin && !skipImageOptimization) {
+    // Only add the plugin on the server build to avoid running multiple times
+    if (isServer && ImageOptimizationWebpackPlugin && !skipImageOptimization) {
       config.plugins.push(
         new ImageOptimizationWebpackPlugin({
           devMode: isDevMode,
           generateResponsive: generateResponsive,
+          debug: process.env.DEBUG_IMAGE_OPTIMIZATION === 'true',
         })
       );
-      console.log('📸 Image optimization plugin enabled');
+      console.log('📸 Image optimization plugin enabled (server build)');
     } else if (skipImageOptimization) {
       console.log('🚫 Image optimization skipped by configuration');
+    } else if (!isServer) {
+      console.log('ℹ️ Image optimization runs only in server build');
     } else {
       console.log('⚠️ Image optimization plugin not available');
     }
