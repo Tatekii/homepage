@@ -54,6 +54,7 @@ const nextConfig = {
           devMode: isDevMode,
           generateResponsive: generateResponsive,
           debug: process.env.DEBUG_IMAGE_OPTIMIZATION === 'true',
+          useCache: process.env.DISABLE_IMAGE_CACHE !== 'true',
         })
       );
       console.log('📸 Image optimization plugin enabled (server build)');

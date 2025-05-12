@@ -11,9 +11,13 @@ const sharp = require("sharp")
 const fs = require("fs")
 const path = require("path")
 const { glob } = require("glob")
+const crypto = require("crypto")
 
-// Track if plugin has already run to avoid duplicate processing
-let hasRun = false
+// Use a WeakMap to track compilations per compiler instance to avoid duplicate processing
+const processedCompilations = new WeakMap()
+
+// Path for the cache file
+const CACHE_FILE_PATH = path.resolve(process.cwd(), ".image-optimization-cache.json")
 
 class ImageOptimizationWebpackPlugin {
 	constructor(options = {}) {
@@ -22,6 +26,7 @@ class ImageOptimizationWebpackPlugin {
 			inputDir: "public",
 			outputDir: options.devMode ? "public" : "out",
 			debug: options.debug || false, // Enable debug logging
+			useCache: options.useCache !== false, // Enable caching by default
 			quality: {
 				webp: 80, // WebP quality (0-100)
 				avif: 65, // AVIF quality (0-100)
@@ -69,28 +74,24 @@ class ImageOptimizationWebpackPlugin {
 	}
 
 	apply(compiler) {
-		// Reset hasRun flag when webpack is done
-		compiler.hooks.done.tap("ImageOptimizationWebpackPlugin", (stats) => {
-			// This will run after all compilations are done
-			if (stats.hasErrors()) {
-				console.log("❌ Build had errors, not resetting image optimization flag")
-			} else if (process.env.NODE_ENV === "development") {
-				// In development mode, reset the flag after each successful build
-				// so that the plugin will run again on the next rebuild
-				hasRun = false
-				console.log("🔄 Image optimization flag reset for next build")
+		// Use emit hook instead of afterEmit - it runs before files are emitted to disk
+		// This gives us a more predictable execution in the webpack lifecycle
+		compiler.hooks.emit.tapAsync("ImageOptimizationWebpackPlugin", async (compilation, callback) => {
+			// Get or create the set of processed compilation hashes for this compiler
+			if (!processedCompilations.has(compiler)) {
+				processedCompilations.set(compiler, new Set())
 			}
-		})
-
-		// Hook into the "afterEmit" lifecycle hook
-		compiler.hooks.afterEmit.tapAsync("ImageOptimizationWebpackPlugin", async (compilation, callback) => {
-			// Skip if plugin has already run in this build process
-			if (hasRun) {
-				console.log("🔄 Image optimization already ran during this build. Skipping...")
+			
+			const processedHashes = processedCompilations.get(compiler)
+			const compilationHash = compilation.hash
+			
+			// Skip if this exact compilation has already been processed
+			if (processedHashes.has(compilationHash)) {
+				console.log("🔄 Image optimization already ran for this compilation. Skipping...")
 				callback()
 				return
 			}
-
+			
 			// Skip image optimization if SKIP_IMAGE_OPTIMIZATION is set
 			if (process.env.SKIP_IMAGE_OPTIMIZATION === "true") {
 				console.log("\n🖼️  Image optimization skipped (SKIP_IMAGE_OPTIMIZATION=true)")
@@ -99,8 +100,8 @@ class ImageOptimizationWebpackPlugin {
 			}
 
 			try {
-				// Set the flag to indicate the plugin has run
-				hasRun = true
+				// Record that we've processed this compilation
+				processedHashes.add(compilationHash)
 
 				const startTime = Date.now()
 				console.log("\n🖼️  Starting image optimization...")
@@ -112,6 +113,24 @@ class ImageOptimizationWebpackPlugin {
 				} else {
 					console.log("🏗️  Running in BUILD mode")
 					console.log(`📂  Writing optimized images to ${this.options.outputDir} directory`)
+				}
+				
+				// Load cache if enabled
+				let imageCache = { images: {}, configHash: "", lastUpdated: "" }
+				const currentConfigHash = this.generateConfigHash()
+				let configChanged = false
+				
+				if (this.options.useCache) {
+					imageCache = this.loadImageCache()
+					configChanged = imageCache.configHash !== currentConfigHash
+					
+					if (configChanged) {
+						console.log("⚙️  Configuration changed - cache invalidated")
+					} else {
+						console.log("✅ Using image optimization cache")
+					}
+				} else {
+					console.log("⚠️  Image caching disabled")
 				}
 
 				// Add debug information about compilation context if debug enabled
@@ -163,6 +182,20 @@ class ImageOptimizationWebpackPlugin {
 					// Get relative path (to maintain directory structure)
 					const relativePath = imagePath.substring(this.options.inputDir.length + 1)
 					const pathInfo = path.parse(relativePath)
+					
+					// Check if we can use cached version
+					const fileHash = this.generateFileHash(imagePath)
+					const cachedImage = imageCache.images[relativePath]
+					const isCached = this.options.useCache && 
+								     !configChanged && 
+								     cachedImage && 
+								     cachedImage.hash === fileHash
+					
+					if (isCached) {
+						// Image hasn't changed and config is the same, skip processing
+						skipped++
+						continue
+					}
 
 					try {
 						// Load image
@@ -175,6 +208,15 @@ class ImageOptimizationWebpackPlugin {
 
 						// Copy original file to output directory
 						const outputOriginalPath = path.join(this.options.outputDir, relativePath)
+						
+						// Store in cache for future builds
+						if (this.options.useCache) {
+							if (!imageCache.images[relativePath]) {
+								imageCache.images[relativePath] = {}
+							}
+							imageCache.images[relativePath].hash = fileHash
+							imageCache.images[relativePath].lastProcessed = new Date().toISOString()
+						}
 
 						// Process in specified output formats
 						for (const format of this.options.formats) {
@@ -307,6 +349,13 @@ class ImageOptimizationWebpackPlugin {
 
 				const endTime = Date.now()
 				console.log(`\n⏱️  Optimization completed in ${((endTime - startTime) / 1000).toFixed(2)}s`)
+				
+				// Update and save cache
+				if (this.options.useCache) {
+					imageCache.configHash = currentConfigHash
+					imageCache.lastUpdated = new Date().toISOString()
+					this.saveImageCache(imageCache)
+				}
 
 				callback()
 			} catch (err) {
@@ -321,6 +370,58 @@ class ImageOptimizationWebpackPlugin {
 		if (!fs.existsSync(directory)) {
 			fs.mkdirSync(directory, { recursive: true })
 		}
+	}
+
+	// Load cache data from file
+	loadImageCache() {
+		try {
+			if (fs.existsSync(CACHE_FILE_PATH)) {
+				const cacheData = JSON.parse(fs.readFileSync(CACHE_FILE_PATH, 'utf8'))
+				return cacheData
+			}
+		} catch (err) {
+			console.log("ℹ️ No valid cache found or error reading cache")
+			if (this.options.debug) {
+				console.error(err)
+			}
+		}
+		return { images: {}, configHash: "", lastUpdated: "" }
+	}
+
+	// Save cache data to file
+	saveImageCache(cacheData) {
+		try {
+			fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(cacheData, null, 2))
+			if (this.options.debug) {
+				console.log("💾 Image optimization cache saved")
+			}
+		} catch (err) {
+			console.error("⚠️ Failed to save image cache", err)
+		}
+	}
+
+	// Generate hash of file contents
+	generateFileHash(filePath) {
+		try {
+			const fileBuffer = fs.readFileSync(filePath)
+			return crypto.createHash('md5').update(fileBuffer).digest('hex')
+		} catch (err) {
+			console.error(`Error generating hash for ${filePath}:`, err.message)
+			return null
+		}
+	}
+
+	// Generate a hash of the current plugin configuration
+	generateConfigHash() {
+		const configString = JSON.stringify({
+			quality: this.options.quality,
+			formats: this.options.formats,
+			generateResponsiveSizes: this.options.generateResponsiveSizes,
+			sizes: this.options.sizes,
+			processingOptions: this.options.processingOptions,
+			skipResponsiveSizeThreshold: this.options.skipResponsiveSizeThreshold,
+		})
+		return crypto.createHash('md5').update(configString).digest('hex')
 	}
 }
 

@@ -13,11 +13,12 @@ The Image Optimization Webpack Plugin integrates directly into the Next.js build
 
 ## How It Works
 
-The plugin hooks into webpack's `afterEmit` lifecycle, which means it runs after all assets have been emitted to the output directory. This ensures that:
+The plugin hooks into webpack's `emit` lifecycle, which runs before files are emitted to disk. This ensures that:
 
 1. All normal webpack processing is completed first
 2. The optimization doesn't interfere with the main build process
 3. It works in both development and production modes
+4. It can cache results between builds for improved performance
 
 ## Usage
 
@@ -70,6 +71,8 @@ The plugin is configured in `next.config.js` and accepts the following options:
 | `generateResponsiveSizes` | Whether to generate responsive variants | `false` |
 | `sizes` | Responsive size breakpoints | `{ sm: 640px, md: 1024px, lg: 1920px }` |
 | `includeDirs` | Subdirectories to process | `['projects']` |
+| `useCache` | Whether to cache optimization results | `true` |
+| `debug` | Show detailed debug information | `false` |
 
 ## Environment Variables
 
@@ -79,6 +82,8 @@ The following environment variables control optimization behavior:
 |----------|-------------|
 | `SKIP_IMAGE_OPTIMIZATION` | Set to `true` to bypass image optimization |
 | `GENERATE_RESPONSIVE` | Set to `true` to generate responsive image variants |
+| `DISABLE_IMAGE_CACHE` | Set to `true` to disable caching of image optimization results |
+| `DEBUG_IMAGE_OPTIMIZATION` | Set to `true` to enable detailed logging |
 | `NODE_ENV` | Determines dev/prod mode (`development` or `production`) |
 
 ## Performance
@@ -89,6 +94,16 @@ The webpack plugin approach offers several advantages:
 2. **Efficiency**: Only optimizes images once per build
 3. **Parallelization**: Works alongside other webpack processes
 4. **Consistency**: Environment variables control behavior
+5. **Caching**: Avoids reprocessing unchanged images during development and builds
+
+### Caching System
+
+The plugin includes a robust caching system that:
+
+1. **Tracks file changes**: Only processes images that have been modified
+2. **Detects config changes**: Automatically invalidates cache when optimization settings change
+3. **Persists between sessions**: Cache file is stored in `.image-optimization-cache.json`
+4. **Improves build speed**: Significantly reduces build time for projects with many images
 
 ## Components
 

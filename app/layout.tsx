@@ -10,14 +10,18 @@ export const metadata: Metadata = {
 	description: "Personal developer portfolio with EDM aesthetics",
 }
 
+import { SiteHeader } from "@/components/site-header"
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${GeistSans.className} antialiased`}>
 				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-					<div className="relative h-screen">
-						<ThemeToggle />
-						{children}
+					<div className="relative min-h-screen">
+						<SiteHeader />
+						<main className="pt-16">
+							{children}
+						</main>
 						<VersionWatermark className="fixed bottom-4 right-4 pointer-events-none z-50" />
 					</div>
 				</ThemeProvider>
