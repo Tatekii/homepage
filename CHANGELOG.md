@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/Tatekii/homepage/compare/v0.3.1...v0.3.2) (2025-05-12)
+
+
+### Features
+
+* add custom image compress plugin ([b12f697](https://github.com/Tatekii/homepage/commit/b12f697408fdc81139c88c26864563b1d7e527f8))
+* add nav header ([e3b000d](https://github.com/Tatekii/homepage/commit/e3b000de4a1b83dcf7f117f93cfd10747901f1ce))
+
+
+### Bug Fixes
+
+* fix void import ([df71a55](https://github.com/Tatekii/homepage/commit/df71a557b1faebd5152e4aef063b5bcf0d4db71a))
+
 ### [0.3.1](https://github.com/Tatekii/homepage/compare/v0.3.0...v0.3.1) (2025-05-10)
 
 
