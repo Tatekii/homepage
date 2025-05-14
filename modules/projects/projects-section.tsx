@@ -5,6 +5,13 @@ import { ProjectData } from "./types"
 
 const projects: ProjectData[] = [
 	{
+		title: "MemeCoin众筹",
+		description: "全栈meme币交易平台",
+		tech: ["Solidity", "Hardhat", "Next", "Wagmi"],
+		preview: "meme.png",
+		sourceCode: "https://github.com/Tatekii/fun-pump",
+	},
+	{
 		title: "jira克隆",
 		description: "全栈项目管理工具，包含看板/日历/工作区/成员管理",
 		tech: ["Next", "AppWrite", "Hono", "Jotai"],
