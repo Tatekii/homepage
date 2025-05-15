@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/Tatekii/homepage/compare/v0.3.2...v0.3.3) (2025-05-15)
+
+
+### Features
+
+* add project ([719548d](https://github.com/Tatekii/homepage/commit/719548d6964b81c06f07a1310f6bf095b15cda7b))
+* add project ([cd3caeb](https://github.com/Tatekii/homepage/commit/cd3caeb08858a995f67525e5b46c4be720828e2b))
+* fix layout and add umami ([26cdc7e](https://github.com/Tatekii/homepage/commit/26cdc7e9e6669d34f9b418a58ee2c26629b736c4))
+
 ### [0.3.2](https://github.com/Tatekii/homepage/compare/v0.3.1...v0.3.2) (2025-05-12)
 
 
