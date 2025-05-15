@@ -12,7 +12,7 @@ const SongEmbed: FC = () => {
 	}
 
 	return (
-		<div className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto mb-4 px-4 hidden sm:block lg:hidden">
+		<div className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto mb-4 px-4  hidden md:block">
 			<div className="relative rounded-lg overflow-hidden bg-background/30 backdrop-blur-md border border-chart-1/30 shadow-lg shadow-chart-2/20 transition-all duration-300">
 				<div className="flex items-center justify-between px-3 p-2">
 					<div className="flex items-center">
@@ -31,11 +31,7 @@ const SongEmbed: FC = () => {
 					</button>
 				</div>
 
-				<div
-					className={`transition-all duration-300 origin-top ${
-						isCollapsed ? "h-0" : "h-full"
-					}`}
-				>
+				<div className={`transition-all duration-300 origin-top ${isCollapsed ? "h-0" : "h-full"}`}>
 					<iframe
 						width="100%"
 						height="110"

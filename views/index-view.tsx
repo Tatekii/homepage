@@ -16,7 +16,7 @@ export function IndexView() {
 	const [activeSection, setActiveSection] = useState<SectionType>("about")
 
 	return (
-		<div className="min-h-screen flex items-center justify-center p-4">
+		<div className="min-h-[calc(100vh-4rem)] flex items-center justify-center">
 			<div className="w-full max-w-6xl">
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 					{/* Left Column - Main Info */}

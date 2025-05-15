@@ -10,7 +10,7 @@ export function SiteHeader() {
 	return (
 		<header className="fixed top-0 left-0 right-0 z-50 bg-black/50 backdrop-blur-md border-b border-white/10">
 			<div className="container mx-auto flex items-center justify-between h-16 px-4">
-				<Link href="/" className="text-xl font-bold">
+				<Link href="/" className="text-xl font-bold animate-spin">
 					🌍
 				</Link>
 
@@ -27,7 +27,7 @@ export function SiteHeader() {
 						Blog
 					</Link>
 
-					<ThemeToggle />
+					<ThemeToggle className="sticky top-16"/>
 				</nav>
 			</div>
 		</header>
