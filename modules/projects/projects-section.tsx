@@ -30,7 +30,7 @@ const projects: ProjectData[] = [
 		title: "xxGIS平台",
 		description: "地理信息可视化管理平台",
 		tech: ["Vue", "Mapbox", "Element", "Vuex"],
-		preview: "gis.png",
+		preview: "gis.jpg",
 	},
 	{
 		title: "xx规则引擎",
@@ -42,7 +42,7 @@ const projects: ProjectData[] = [
 		title: "xx低代码平台",
 		description: "动态页面，动态路由，动态表单",
 		tech: ["React", "Antd", "Redux", "ECharts"],
-		preview: "lowcode.png",
+		preview: "lowcode.jpg",
 	},
 	{
 		title: "在线购物网站",

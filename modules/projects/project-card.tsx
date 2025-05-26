@@ -6,13 +6,17 @@ import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/comp
 import { Code, ExternalLink, X } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { OptimizedImage } from "@/components/optimized-image"
 import { motion, AnimatePresence } from "framer-motion"
 import { ProjectData } from "@/modules/projects/types"
 
 export type ProjectCardProps = ProjectData
 
-export function ProjectCard({ title, description, tech, link = "", preview,sourceCode='' }: ProjectCardProps) {
+export function ProjectCard({ title, description, tech, link = "", preview, sourceCode = "" }: ProjectCardProps) {
+	// 使用 WebP 格式，预处理脚本已经生成了相应的文件
+	const webpPath = "projects/" + preview.replace(/\.(jpg|jpeg|png|gif)$/i, '.webp')
+	// 备用路径，以防浏览器不支持 WebP
+	const originalPath = "projects/" + preview
+
 	const [showFullImage, setShowFullImage] = useState(false)
 
 	const toggleImagePreview = (e: React.MouseEvent) => {
@@ -25,14 +29,17 @@ export function ProjectCard({ title, description, tech, link = "", preview,sourc
 		<>
 			<Card className="bg-card/30 backdrop-blur-sm hover:border-chart-2/50 transition-all shadow-sm hover:shadow-md hover:shadow-chart-2/20 group h-full overflow-hidden">
 				{/* Preview Image - Clickable */}
-				<div className="relative h-32 w-full overflow-hidden cursor-pointer">
-					<OptimizedImage
-						src={"projects/" + preview}
-						alt={`${title} preview`}
-						fill
-						className="object-cover transition-transform group-hover:scale-105 duration-300"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					/>
+				<div className="relative h-32 w-full overflow-hidden cursor-pointer" onClick={toggleImagePreview}>
+					<picture>
+						<source srcSet={webpPath} type="image/webp" />
+						<Image
+							src={originalPath}
+							alt={`${title} preview`}
+							fill
+							className="object-cover transition-transform group-hover:scale-105 duration-300"
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						/>
+					</picture>
 				</div>
 
 				{/* Card Content */}
@@ -41,8 +48,6 @@ export function ProjectCard({ title, description, tech, link = "", preview,sourc
 						<CardTitle className="text-md font-semibold">{title}</CardTitle>
 
 						<div className="links flex gap-1">
-
-
 							{sourceCode && (
 								<Link href={sourceCode} target="_blank" rel="noopener noreferrer" className="block">
 									<Code className="h-4 w-4 opacity-50 hover:opacity-100 transition-opacity" />
@@ -93,13 +98,16 @@ export function ProjectCard({ title, description, tech, link = "", preview,sourc
 							onClick={(e) => e.stopPropagation()}
 						>
 							<div className="relative w-full h-[70vh]">
-								<OptimizedImage
-									src={"projects/" + preview}
-									alt={`${title} preview`}
-									fill
-									className="object-contain"
-									priority
-								/>
+								<picture>
+									<source srcSet={webpPath} type="image/webp" />
+									<Image
+										src={originalPath}
+										alt={`${title} preview`}
+										fill
+										className="object-contain"
+										priority
+									/>
+								</picture>
 							</div>
 							<div className="absolute top-3 right-3">
 								<button
