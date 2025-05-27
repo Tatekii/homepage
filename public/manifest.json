@@ -1,0 +1,22 @@
+{
+  "name": "Siyn Ma Portfolio",
+  "short_name": "Siyn Ma",
+  "description": "Full Stack Developer & Web3 Specialist Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#030711",
+  "theme_color": "#875eff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

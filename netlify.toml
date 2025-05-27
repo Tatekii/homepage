@@ -48,3 +48,14 @@
 
 [build.processing.images]
   compress = true
+
+# Ensure SEO-related files are properly accessible
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.next/server/app/sitemap.xml"
+  status = 200
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "/.next/server/app/robots.txt"
+  status = 200
