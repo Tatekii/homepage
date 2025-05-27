@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/Tatekii/homepage/compare/v0.3.3...v0.4.0) (2025-05-27)
+
+
+### Features
+
+* improve performance and add SEO(by ai) ([df7b3fa](https://github.com/Tatekii/homepage/commit/df7b3fa579c5c22c9f6c27c17fea62ad6edf3097))
+
+
+### Code Refactoring
+
+* use script to compress images ([01b2f10](https://github.com/Tatekii/homepage/commit/01b2f10364ff5282630c4abb79493ae6ab285690))
+
 ### [0.3.3](https://github.com/Tatekii/homepage/compare/v0.3.2...v0.3.3) (2025-05-15)
 
 
