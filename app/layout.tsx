@@ -41,16 +41,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						<SchemaOrg />
 						<SiteHeader />
 						<main className="pt-16" id="main-content">{children}</main>
-						<footer className="py-8 mt-16 border-t border-border/40">
-							<div className="container mx-auto px-4">
-								<div className="flex flex-col md:flex-row justify-between items-center">
-									<p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Siyn Ma. All rights reserved.</p>
-									<div className="flex items-center mt-4 md:mt-0">
-										<ThemeToggle />
-									</div>
-								</div>
-							</div>
-						</footer>
 						<VersionWatermark className="fixed bottom-4 right-4 pointer-events-none z-50" />
 					</div>
 				</ThemeProvider>
