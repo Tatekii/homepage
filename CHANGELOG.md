@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://github.com/Tatekii/homepage/compare/v0.4.0...v0.4.1) (2025-06-18)
+
+
+### Bug Fixes
+
+* remove footer ([3d62136](https://github.com/Tatekii/homepage/commit/3d621367561e5d9ea9c3271594fa290437655aa7))
+
 ## [0.4.0](https://github.com/Tatekii/homepage/compare/v0.3.3...v0.4.0) (2025-05-27)
 
 
